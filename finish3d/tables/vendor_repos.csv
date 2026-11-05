@@ -1,0 +1,9 @@
+vendor,package_pattern,repo_url,path_template,license
+# GitHub / vendor 3D library table for networked source 5 (handoff §4).
+# path_template supports {mpn} {name} {lib}. Must point at a raw downloadable model file.
+KiCad packages3D,*,https://gitlab.com/kicad/libraries/kicad-packages3D,https://gitlab.com/kicad/libraries/kicad-packages3D/-/raw/master/{lib}.3dshapes/{name}.wrl,CC-BY-SA-4.0
+Wuerth,*60312202114509*,https://www.we-online.com,https://www.we-online.com/components/products/download/{mpn}.stp,vendor (WE terms)
+Samtec,*SAMTEC*,https://www.samtec.com,https://suddendocs.samtec.com/3d/{mpn}.stp,vendor (Samtec terms)
+TE Connectivity,*TE_*,https://www.te.com,https://www.te.com/commerce/DocumentDelivery/DDEController?Action=showdoc&DocId=Customer+Drawing/{mpn}.stp,vendor (TE terms)
+Espressif,*ESP32*,https://github.com/espressif/kicad-libraries,https://raw.githubusercontent.com/espressif/kicad-libraries/main/footprints/{name}.wrl,Apache-2.0
+Nordic,*nRF*,https://github.com/NordicSemiconductor,https://raw.githubusercontent.com/NordicSemiconductor/kicad-libs/main/3d/{name}.wrl,BSD-3-Clause

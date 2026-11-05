@@ -1,0 +1,12 @@
+footprint_glob,source,locator,offset,rotate,scale,license,note
+# Seeded from this project's hard-won entries (handoff §4). offset/rotate as "x;y;z".
+*BWSMA-KE-P001*,generate,bwsma,0;0;0,0;0;0,1;1;1,own,"BWSMA edge SMA; legs straddle 1.6mm board"
+*WR-SMA*,generate,wurth_sma,0;0;0,0;0;0,1;1;1,own,"Wuerth WR-SMA; footprint rotated 270/90 so barrel faces out"
+*60312202114509*,github,wurth,0;0;0,0;0;0,1;1;1,vendor,"Wuerth vendor STEP preferred when online"
+*SMA*Edge*,generate,generic_edge_sma,0;0;0,0;0;0,1;1;1,own,"generic edge-SMA family scaled to courtyard"
+*U.FL*,stock,,0;0;0,0;0;0,1;1;1,KiCad,"u.FL / IPEX from KiCad stock packages3D"
+*IPEX*,stock,,0;0;0,0;0;0,1;1;1,KiCad,"u.FL / IPEX from KiCad stock packages3D"
+Resistor_SMD:R_0402*,stock,,0;0;0,0;0;0,1;1;1,KiCad,"common JLC/LCSC passive"
+Resistor_SMD:R_0603*,stock,,0;0;0,0;0;0,1;1;1,KiCad,"common JLC/LCSC passive"
+Capacitor_SMD:C_0402*,stock,,0;0;0,0;0;0,1;1;1,KiCad,"common JLC/LCSC passive"
+Capacitor_SMD:C_0603*,stock,,0;0;0,0;0;0,1;1;1,KiCad,"common JLC/LCSC passive"

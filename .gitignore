@@ -1,0 +1,18 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.venv/
+venv/
+out/
+*.pyo
+.DS_Store
+
+# never commit private/client boards or downloaded models (handoff §7.1)
+*.kicad_pro
+*.kicad_prl
+finish3d_models/
+finish3d_out/
+!tests/data/**

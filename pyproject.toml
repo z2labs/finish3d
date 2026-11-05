@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "finish3d"
+version = "0.1.0"
+description = "Autonomous 3D-model resolution, seating and verification for KiCad (offline-first)."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "GPL-3.0-or-later" }
+authors = [{ name = "Z2Labs" }]
+keywords = ["kicad", "3d", "footprint", "pcb", "cadquery", "easyeda"]
+classifiers = [
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Electronic Design Automation (EDA)",
+]
+# core is stdlib-only: offline resolve/seat/verify/generate(box) always works
+dependencies = []
+
+[project.optional-dependencies]
+# networked sources (EasyEDA/LCSC, GitHub vendor libs)
+net = ["requests>=2.28", "easyeda2kicad>=0.8"]
+# parametric STEP generation + STEP bbox verification
+gen = ["cadquery>=2.4"]
+dev = ["pytest>=7"]
+
+[project.urls]
+Homepage = "https://github.com/z2labs/finish3d"
+
+[project.scripts]
+finish3d = "finish3d.cli:main"
+
+[tool.setuptools]
+packages = [
+    "finish3d",
+    "finish3d.sources",
+    "finish3d.sources.generators",
+]
+
+[tool.setuptools.package-data]
+"finish3d" = ["tables/*.csv"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
