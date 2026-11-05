@@ -9,6 +9,8 @@ venv/
 out/
 *.pyo
 .DS_Store
+packaging/_stage/
+resources/icon_256.png
 
 # never commit private/client boards or downloaded models (handoff §7.1)
 *.kicad_pro

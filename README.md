@@ -51,10 +51,17 @@ python -m finish3d board.kicad_pcb --online --write-back --out out/
 python -m finish3d selftest
 ```
 
-### GUI (KiCad 10)
+### GUI (KiCad 9 / 10) — PCM installer
 
-Install as a PCM package (`metadata.json`) and press the **Finish 3D** toolbar button.
-Needs hand-testing on a KiCad 10 machine; `pcb render` needs KiCad 8+.
+Build the installer zip and install it from KiCad:
+
+```bash
+python3 packaging/make_pcm.py          # -> dist/finish3d-<ver>-pcm.zip
+```
+
+In KiCad: **Tools → Plugin and Content Manager → Install from File…**, pick the zip,
+then press the **Finish 3D** toolbar button (the 3D-IC icon). `pcb render` needs
+KiCad 8+. See `docs/PACKAGING.md`.
 
 ### From another plugin or an AI agent
 
