@@ -44,10 +44,21 @@ leads, teal pin-1 dot) at 8× supersample and writes:
 
 Re-run `make_icon.py` to regenerate after any tweak.
 
-## Publishing to a PCM repository (optional, later)
+## Publishing to a PCM repository (Add-repository URL)
 
-To let users install via an "Add repository" URL instead of a file, host a
-`repository.json` + `packages.json` (with a `versions[].download_url` pointing at a
-released zip, plus the `download_sha256` / `download_size` / `install_size` printed
-by `make_pcm.py`). A GitHub Release asset is the usual home for the zip.
+```bash
+python3 packaging/make_pcm.py     # the installer zip
+python3 packaging/make_repo.py    # packages.json + resources.zip + repository.json
 ```
+
+`make_repo.py` writes `dist/pcm-repo/` with the repository files (URLs point at the
+GitHub release assets, hashes/sizes filled in) plus `metadata-submission.json` for
+the official repo. Create a GitHub release tagged `v<version>` and upload the four
+assets: `finish3d-<version>-pcm.zip`, `packages.json`, `resources.zip`,
+`repository.json`. Users then add, in KiCad → PCM → Manage…:
+
+```
+https://github.com/z2labs/finish3d/releases/download/v<version>/repository.json
+```
+
+For the **official** KiCad PCM list, see `docs/SUBMITTING.md`.

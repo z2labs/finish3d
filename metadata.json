@@ -15,11 +15,11 @@
     },
     "license": "GPL-3.0-or-later",
     "resources": { "homepage": "https://github.com/z2labs/finish3d" },
-    "tags": ["3d", "footprint", "model", "render", "automation"],
+    "tags": ["footprints", "models", "render", "automation", "kicad"],
     "versions": [
         {
             "version": "0.1.0",
-            "status": "development",
+            "status": "testing",
             "kicad_version": "9.0",
             "kicad_version_max": "10.0"
         }
