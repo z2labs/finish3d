@@ -59,9 +59,18 @@ Build the installer zip and install it from KiCad:
 python3 packaging/make_pcm.py          # -> dist/finish3d-<ver>-pcm.zip
 ```
 
-In KiCad: **Tools → Plugin and Content Manager → Install from File…**, pick the zip,
-then press the **Finish 3D** toolbar button (the 3D-IC icon). `pcb render` needs
-KiCad 8+. See `docs/PACKAGING.md`.
+Install it either way:
+
+- **From file:** KiCad → **Plugin and Content Manager → Install from File…** → the zip.
+- **From repository:** KiCad → **Plugin and Content Manager → Manage…** → add
+
+  ```
+  https://raw.githubusercontent.com/z2labs/finish3d/main/pcm/repository.json
+  ```
+
+Then press the **Finish 3D** toolbar button (the UV-window EPROM icon). `pcb render`
+needs KiCad 8+. See `docs/PACKAGING.md`; for the official PCM list see
+`docs/SUBMITTING.md`.
 
 ### From another plugin or an AI agent
 

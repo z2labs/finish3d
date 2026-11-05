@@ -46,19 +46,29 @@ Re-run `make_icon.py` to regenerate after any tweak.
 
 ## Publishing to a PCM repository (Add-repository URL)
 
+Two hosting modes:
+
 ```bash
-python3 packaging/make_pcm.py     # the installer zip
-python3 packaging/make_repo.py    # packages.json + resources.zip + repository.json
+python3 packaging/make_pcm.py            # 1) build the installer zip
+python3 packaging/make_repo.py raw       # 2a) host via raw.githubusercontent (committed)
+python3 packaging/make_repo.py release   # 2b) host as GitHub release assets
 ```
 
-`make_repo.py` writes `dist/pcm-repo/` with the repository files (URLs point at the
-GitHub release assets, hashes/sizes filled in) plus `metadata-submission.json` for
-the official repo. Create a GitHub release tagged `v<version>` and upload the four
-assets: `finish3d-<version>-pcm.zip`, `packages.json`, `resources.zip`,
-`repository.json`. Users then add, in KiCad → PCM → Manage…:
+**raw (works immediately, no release needed):** writes `pcm/` — the installer zip,
+`packages.json`, `resources.zip`, `repository.json` and `metadata-submission.json`,
+with `download_url`s pointing at `raw.githubusercontent.com/.../pcm/`. Commit `pcm/`
+and users add, in KiCad → PCM → Manage…:
 
 ```
-https://github.com/z2labs/finish3d/releases/download/v<version>/repository.json
+https://raw.githubusercontent.com/z2labs/finish3d/main/pcm/repository.json
 ```
+
+**release:** writes `dist/pcm-repo/` with `download_url`s pointing at a GitHub
+release tagged `v<version>`. Create that release and upload the four assets
+(`finish3d-<version>-pcm.zip`, `packages.json`, `resources.zip`, `repository.json`);
+the Add-repository URL is then the release asset URL of `repository.json`.
+
+> Every `make_pcm.py` run produces a new zip sha (zip entry timestamps), so always
+> run `make_repo.py` **after** `make_pcm.py` and commit/upload them together.
 
 For the **official** KiCad PCM list, see `docs/SUBMITTING.md`.

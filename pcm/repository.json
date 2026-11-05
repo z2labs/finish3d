@@ -1,0 +1,22 @@
+{
+  "$schema": "https://go.kicad.org/pcm/schemas/v1",
+  "name": "Finish 3D (Z2Labs) PCM repository",
+  "maintainer": {
+    "name": "Z2Labs",
+    "contact": {
+      "web": "https://github.com/z2labs/finish3d"
+    }
+  },
+  "packages": {
+    "url": "https://raw.githubusercontent.com/z2labs/finish3d/main/pcm/packages.json",
+    "sha256": "9dde7684ca0acce2473c0598d9efdce2a6c877be3791743a4d71651d964127b8",
+    "update_time_utc": "2026-11-05 22:59:45",
+    "update_timestamp": 1793919585
+  },
+  "resources": {
+    "url": "https://raw.githubusercontent.com/z2labs/finish3d/main/pcm/resources.zip",
+    "sha256": "7eeea772e66fd76b6237559b7e5b9db79afb99756c6f8a61ffab5710f8263bdf",
+    "update_time_utc": "2026-11-05 22:59:45",
+    "update_timestamp": 1793919585
+  }
+}

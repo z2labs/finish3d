@@ -1,0 +1,47 @@
+{
+  "packages": [
+    {
+      "$schema": "https://go.kicad.org/pcm/schemas/v1",
+      "name": "Finish 3D",
+      "description": "Autonomously resolve, seat and verify 3D models on footprints.",
+      "description_full": "Finish 3D resolves a 3D model for every footprint on a board using an offline-first chain (existing link, KiCad stock, local cache, EasyEDA/LCSC, GitHub/vendor libraries, parametric generation, placeholder), seats it with the correct rotate-then-mirror transform, and verifies the seat against the footprint courtyard with a witness self-test. Callable from the GUI, the CLI, and by other plugins / AI agents via a JSON API. Core is offline and stdlib-only.",
+      "identifier": "com.github.z2labs.finish3d",
+      "type": "plugin",
+      "author": {
+        "name": "Z2Labs",
+        "contact": {
+          "web": "https://github.com/z2labs/finish3d"
+        }
+      },
+      "maintainer": {
+        "name": "Z2Labs",
+        "contact": {
+          "web": "https://github.com/z2labs/finish3d"
+        }
+      },
+      "license": "GPL-3.0-or-later",
+      "resources": {
+        "homepage": "https://github.com/z2labs/finish3d"
+      },
+      "tags": [
+        "footprints",
+        "models",
+        "render",
+        "automation",
+        "kicad"
+      ],
+      "versions": [
+        {
+          "version": "0.1.0",
+          "status": "testing",
+          "kicad_version": "9.0",
+          "kicad_version_max": "10.0",
+          "download_url": "https://raw.githubusercontent.com/z2labs/finish3d/main/pcm/finish3d-0.1.0-pcm.zip",
+          "download_sha256": "3219719356f53ad3cf9c9fa1b9b0d8d96ff4c11a47a83c3c4fe56e12d237d620",
+          "download_size": 50693,
+          "install_size": 101711
+        }
+      ]
+    }
+  ]
+}

@@ -91,9 +91,10 @@ def draw_icon(size: int) -> Image.Image:
             d.polygon([k1, k2, f2, f1], fill=SILVER_HI)
             d.line([p1, k1, f1], fill=SILVER_HI, width=max(1, SS))
 
-    # long side (more pins) and short side (fewer) -> reads as a DIP
-    leads(drop(c_front), drop(c_left), out_sign=-1, n=7)
-    leads(drop(c_front), drop(c_right), out_sign=+1, n=4)
+    # DIP: leads on the LONG sides only. In this iso view one long side is
+    # visible (front-left) and the short end (front-right) is bare -- like a real
+    # dual-in-line package. The second row sits on the hidden back-long side.
+    leads(drop(c_front), drop(c_left), out_sign=-1, n=8, widthf=0.55)
 
     # ---- the quartz UV window on the top face ----
     def circle_on_top(radius, cu=0.0, cv=0.0, steps=64):

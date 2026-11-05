@@ -20,6 +20,8 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import shutil
+import sys
 import time
 import zipfile
 
@@ -29,7 +31,25 @@ REPO = os.path.dirname(HERE)
 OWNER = "z2labs"
 NAME = "finish3d"
 RELEASE_TAG = "v0.1.0"
-BASE = f"https://github.com/{OWNER}/{NAME}/releases/download/{RELEASE_TAG}/"
+BRANCH = "main"
+
+# Two hosting modes:
+#   raw     -> committed under pcm/ on the branch, served via raw.githubusercontent
+#              (works immediately, no GitHub release needed)
+#   release -> served as assets of the GitHub release RELEASE_TAG (for the official
+#              submission; create the release + upload the assets separately)
+HOSTS = {
+    "raw": (
+        os.path.join(REPO, "pcm"),
+        f"https://raw.githubusercontent.com/{OWNER}/{NAME}/{BRANCH}/pcm/",
+        True,   # copy the installer zip into the output dir
+    ),
+    "release": (
+        os.path.join(REPO, "dist", "pcm-repo"),
+        f"https://github.com/{OWNER}/{NAME}/releases/download/{RELEASE_TAG}/",
+        False,
+    ),
+}
 
 
 def _sha256(data: bytes) -> str:
@@ -41,7 +61,11 @@ def _zip_install_size(zip_path: str) -> int:
         return sum(i.file_size for i in zf.infolist())
 
 
-def build() -> dict:
+def build(host: str = "raw") -> dict:
+    if host not in HOSTS:
+        raise SystemExit(f"host must be one of {list(HOSTS)}")
+    out, BASE, copy_zip = HOSTS[host]
+
     ver_meta = json.load(open(os.path.join(REPO, "metadata.json")))
     version = ver_meta["versions"][0]["version"]
     zip_name = f"{NAME}-{version}-pcm.zip"
@@ -49,8 +73,9 @@ def build() -> dict:
     if not os.path.exists(zip_path):
         raise SystemExit("build the installer first: python3 packaging/make_pcm.py")
 
-    out = os.path.join(REPO, "dist", "pcm-repo")
     os.makedirs(out, exist_ok=True)
+    if copy_zip:
+        shutil.copy2(zip_path, os.path.join(out, zip_name))
 
     now = int(time.time())
     now_utc = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(now))
@@ -116,12 +141,10 @@ def build() -> dict:
     with open(os.path.join(out, "repository.json"), "w", encoding="utf-8") as fh:
         json.dump(repository, fh, indent=2)
 
-    print("wrote", os.path.join(out, "packages.json"))
-    print("wrote", res_path)
-    print("wrote", os.path.join(out, "repository.json"))
-    print("\nAdd-repository URL (after the release is published):")
+    print(f"[host={host}] wrote repo files to {out}")
+    print("\nAdd-repository URL:")
     print("  " + BASE + "repository.json")
-    return {"zip": zip_path, "out": out,
+    return {"zip": zip_path, "out": out, "base": BASE,
             "assets": [zip_path,
                        os.path.join(out, "packages.json"),
                        res_path,
@@ -129,4 +152,5 @@ def build() -> dict:
 
 
 if __name__ == "__main__":
-    build()
+    host = sys.argv[1] if len(sys.argv) > 1 else "raw"
+    build(host)
