@@ -33,7 +33,7 @@ def generate_box(fp, cfg, out_path: str) -> Optional[ModelHit]:
     cx = (cy.xmin + cy.xmax) / 2
     cy_ = (cy.ymin + cy.ymax) / 2
     model_io.write_box_wrl(
-        out_path, dx=dx, dy=dy, dz=dz, center_xy=(cx, cy_), z0=0.0,
+        out_path, dx=dx, dy=dy, dz=dz, center_xy=(cx, -cy_), z0=0.0,  # footprint Y is down, model Y is up
         color=(0.35, 0.45, 0.5), label=f"generated-box {fp.name}",
     )
     return ModelHit(

@@ -1,9 +1,8 @@
 """Read/write 3D model geometry without a CAD kernel (stdlib only).
 
 * ``wrl_vertex_bbox`` scans a VRML2 (.wrl) file for ``Coordinate { point [...] }``
-  blocks and returns the raw vertex bounding box. KiCad WRL models are in
-  0.1 inch "KiCad units" historically, but modern exports are in mm; we return
-  the raw numbers and let the caller apply the model's scale.
+  blocks and returns the vertex bounding box in millimetres. KiCad renders one
+  WRL unit as 0.1 inch (2.54 mm), so the raw numbers are converted here.
 * ``write_box_wrl`` emits a labelled rectangular box. This lets the offline
   ``Generate`` source and the ``Placeholder`` source produce a real, viewable
   model with zero dependencies -- no CadQuery, no OCP.
@@ -51,6 +50,10 @@ class Bounds3D:
         )
 
 
+# KiCad's VRML loader treats one WRL unit as 0.1 inch. Everything in this
+# module speaks millimetres, so WRL vertices are converted on read and on write.
+KICAD_VRML_UNIT_MM = 2.54
+
 _POINT_BLOCK = re.compile(r"point\s*\[(.*?)\]", re.DOTALL)
 _NUMBER = re.compile(r"[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?")
 
@@ -74,7 +77,9 @@ def wrl_vertex_bbox(path: str) -> Optional[Bounds3D]:
             zs.append(nums[i + 2])
     if not xs:
         return None
-    return Bounds3D(min(xs), min(ys), min(zs), max(xs), max(ys), max(zs))
+    k = KICAD_VRML_UNIT_MM
+    return Bounds3D(min(xs) * k, min(ys) * k, min(zs) * k,
+                    max(xs) * k, max(ys) * k, max(zs) * k)
 
 
 def step_bbox(path: str) -> Optional[Bounds3D]:
@@ -111,7 +116,8 @@ def write_box_wrl(
     color: tuple[float, float, float] = (0.4, 0.4, 0.45),
     label: str = "",
 ) -> str:
-    """Write an axis-aligned box as VRML2. Units are millimetres.
+    """Write an axis-aligned box as VRML2. Arguments are millimetres; the file
+    is written in KiCad VRML units (0.1 inch) so it renders at true size.
 
     The box spans ``[cx-dx/2, cx+dx/2] x [cy-dy/2, cy+dy/2] x [z0, z0+dz]``.
     """
@@ -120,9 +126,12 @@ def write_box_wrl(
     y0, y1 = cy - dy / 2, cy + dy / 2
     za, zb = z0, z0 + dz
 
+    k = KICAD_VRML_UNIT_MM  # mm -> KiCad VRML units (0.1 inch)
     verts = [
-        (x0, y0, za), (x1, y0, za), (x1, y1, za), (x0, y1, za),
-        (x0, y0, zb), (x1, y0, zb), (x1, y1, zb), (x0, y1, zb),
+        (x / k, y / k, z / k) for x, y, z in (
+            (x0, y0, za), (x1, y0, za), (x1, y1, za), (x0, y1, za),
+            (x0, y0, zb), (x1, y0, zb), (x1, y1, zb), (x0, y1, zb),
+        )
     ]
     faces = [
         (0, 1, 2, 3), (4, 5, 6, 7),

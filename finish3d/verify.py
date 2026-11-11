@@ -117,7 +117,8 @@ def verify(fp, hit, seat, cfg) -> VerifyResult:
     model_cx = (placed.xmin + placed.xmax) / 2
     model_cy = (placed.ymin + placed.ymax) / 2
     court_cx = (cy.xmin + cy.xmax) / 2
-    court_cy = (cy.ymin + cy.ymax) / 2
+    # Footprint-local Y points down (PCB frame); model Y points up.
+    court_cy = -(cy.ymin + cy.ymax) / 2
     centre_shift = math.hypot(model_cx - court_cx, model_cy - court_cy)
     checks["xy_extent"] = (
         cover_lo <= cover_x <= cover_hi
